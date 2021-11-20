@@ -26,6 +26,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"/>
+        <!--        <mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"/>-->
+        <package name="tk.mybatis.simple.mapper"/>
     </mappers>
 </configuration>
