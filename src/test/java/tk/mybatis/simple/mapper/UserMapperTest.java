@@ -171,4 +171,72 @@ public class UserMapperTest extends BaseMapperTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testDeleteById() {
+        //获取sqlSession
+        SqlSession sqlSession = getSqlSession();
+        try {
+            //获取UserMapper接口
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            //从数据库查询1个user对象,根据id=1查询
+            SysUser user1 = userMapper.selectById(1L);
+            //现在还能查出user对象
+            Assert.assertNotNull(user1);
+            //调用方法删除
+            Assert.assertEquals(1, userMapper.deleteById(1L));
+            //再次查询，这时应该没有值，为null
+            Assert.assertNull(userMapper.selectById(1L));
+
+            //使用SysUser参数再进行一次测试，根据id=1001查询
+            SysUser user2 = userMapper.selectById(1001L);
+            //现在还能查询出user对象
+            Assert.assertNotNull(user2);
+            //调用方法删除，注意这里使用参数为user2
+            Assert.assertEquals(1, userMapper.deleteById(user2));
+            //再次查询，这时应该没有值，为null
+            Assert.assertNull(userMapper.selectById(1001L));
+            //使用SysUser参数再进行一次测试
+
+        } finally {
+            //为了不影响数据库中的数据导致其他测试失败，这里选择回滚
+            //由于默认的 sqlSessionFactory.openSession() 是不自动提交的，
+            //因此不手动执行 commit 也不会提交到数据库
+//            sqlSession.commit();
+            sqlSession.rollback();
+            //不要忘记关闭 sqlSession
+            sqlSession.close();
+        }
+    }
+
+
+    @Test
+    public void testSelectRolesByUserIdAndRoleEnabled() {
+        //获取sqlSession
+        SqlSession sqlSession = getSqlSession();
+        try {
+            //获取UserMapper接口
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            SysUser user = new SysUser();
+            user.setId(1L);
+            SysRole role = new SysRole();
+            role.setEnabled(1);
+            //调用selectRolesByUserIdAndRoleEnabled方法查询用户的角色
+//            List<SysRole> userList = userMapper.selectRolesByUserIdAndRoleEnabled(1L, 1);
+            List<SysRole> userList = userMapper.selectRolesByUserIdAndRoleEnabled(user, role);
+            //结果不为空
+            Assert.assertNotNull(userList);
+            //角色数量大于0个
+            Assert.assertTrue(userList.size() > 0);
+
+        } finally {
+            //为了不影响数据库中的数据导致其他测试失败，这里选择回滚
+            //由于默认的 sqlSessionFactory.openSession() 是不自动提交的，
+            //因此不手动执行 commit 也不会提交到数据库
+//            sqlSession.commit();
+            sqlSession.rollback();
+            //不要忘记关闭 sqlSession
+            sqlSession.close();
+        }
+    }
 }
