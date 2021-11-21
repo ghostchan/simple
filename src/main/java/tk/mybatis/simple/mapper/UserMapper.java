@@ -28,4 +28,12 @@ public interface UserMapper {
      * @return
      */
     List<SysRole> selectRolesByUserId(Long userId);
+
+    /**
+     * 新增用户
+     *
+     * @param sysUser
+     * @return
+     */
+    int insert(SysUser sysUser);
 }
