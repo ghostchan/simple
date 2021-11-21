@@ -8,22 +8,33 @@
         <result property="userPassword" column="user_password"/>
         <result property="userEmail" column="user_email"/>
         <result property="userInfo" column="user_info"/>
-        <result property="headImg" column="head_img" javaType="BLOB"/>
-        <result property="createTime" column="create_time" javaType="TIMESTAMP"/>
+        <result property="headImg" column="head_img" jdbcType="BLOB"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <select id="selectById" resultMap="userMap">
-        select * from sys_user where id = #{id}
+        select *
+        from sys_user
+        where id = #{id}
     </select>
 
     <select id="selectAll" resultType="tk.mybatis.simple.model.SysUser">
+        #         select id,
+#                user_name userName,
+#                user_password userPassword,
+#                user_email userEmail,
+#                user_info userInfo,
+#                head_img headImg,
+#                create_time createTime
+#                from sys_user
+
         select id,
-               user_name userName,
-               user_password userPassword,
-               user_email userEmail,
-               user_info userInfo,
-               head_img headImg,
-               create_time createTime
-               from sys_user
+               user_name,
+               user_password,
+               user_email,
+               user_info,
+               head_img,
+               create_time
+        from sys_user
     </select>
 </mapper>

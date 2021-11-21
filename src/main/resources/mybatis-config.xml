@@ -5,6 +5,7 @@
 <configuration>
     <settings>
         <setting name="logImpl" value="LOG4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
     <typeAliases>
@@ -29,4 +30,6 @@
         <!--        <mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"/>-->
         <package name="tk.mybatis.simple.mapper"/>
     </mappers>
+
+
 </configuration>
